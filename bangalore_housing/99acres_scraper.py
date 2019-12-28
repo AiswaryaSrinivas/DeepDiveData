@@ -14,19 +14,27 @@ def getTotalProperties(base_url):
     soup=BeautifulSoup(response.content)
     #print(soup)
     total_properties=soup.find("div",attrs={'class':'title_semiBold r_srp__spacer20'}).text.split("|")[0]
-    total_properties=total_properties.strip('"').split(" ")[0]
+    total_properties=int(total_properties.strip('"').split(" ")[0])
+    page_tag=soup.find("div",attrs={'class':"Pagination__srpPagination"})
+    num_pages=page_tag.find("div",attrs={"class":"caption_strong_large"}).text
+    num_pages=num_pages.replace("Page 1 of ","").strip()
+    num_pages=int(num_pages)
 
 
-    return total_properties
+
+
+
+    return total_properties,num_pages
+
+
+
 
 
 def getAllPageURL(base_url):
     property_data_list=[]
-    total_properties=int(getTotalProperties(base_url))
+    total_properties,num_pages=getTotalProperties(base_url)
     print("Total Properties "+str(total_properties))
-    num_pages=total_properties//30
-    if total_properties%31!=0:
-        num_pages=num_pages+1
+    print("Total Pages "+str(num_pages))
     urls=[]
     urls.append(base_url)
     for i in range(0,num_pages):
@@ -61,8 +69,8 @@ def getAllProperties(url):
     print(len(properties_tag))
     for prop_tag in properties_tag:
         dat=getPropertyDetails(prop_tag)
-        #print(dat.shape)
-        property_list.append(dat)
+        if dat.shape[0]>0:
+            property_list.append(dat)
 
     data=pd.concat(property_list)
     print(data.shape)
