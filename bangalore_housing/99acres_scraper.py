@@ -36,6 +36,7 @@ def getAllPageURL(base_url):
     print("Total Properties "+str(total_properties))
     print("Total Pages "+str(num_pages))
     urls=[]
+    
     urls.append(base_url)
     for i in range(0,num_pages):
         temp_url=base_url
@@ -45,7 +46,9 @@ def getAllPageURL(base_url):
     for url in urls:
         print(url)
         data=getAllProperties(url)
-        property_data_list.append(data)
+        if data.shape[0]>0:
+            property_data_list.append(data)
+
     property_data=pd.concat(property_data_list)
     print("Total properties extracted")
     print(property_data.shape)
@@ -71,10 +74,13 @@ def getAllProperties(url):
         dat=getPropertyDetails(prop_tag)
         if dat.shape[0]>0:
             property_list.append(dat)
-
-    data=pd.concat(property_list)
-    print(data.shape)
-    return data
+        print(len(property_list))
+    if len(property_list)>0:
+        data=pd.concat(property_list)
+        print(data.shape)
+        return data
+    else:
+        return pd.DataFrame()
 
 def getPropertyDetails(prop_tag):
 
