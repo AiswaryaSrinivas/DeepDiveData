@@ -162,7 +162,7 @@ row = html.Div(
         dbc.Row(
             [
                 dbc.Col(
-                    html.H1("Cerner Tweet Dashboard"),
+                    html.H1("Tweet Dashboard"),
                     width={"size": 6, "offset": 3},
                 ),
                 html.Br(),
@@ -282,7 +282,6 @@ def update_table(sentiment_click):
         filtered_df=tweets_data
         sentiment="All"
     return generate_table(filtered_df,columns_list=['url','text','nbr_retweet','nbr_favorite','nbr_reply','datetime','polarity','subjectivity'],sentiment=sentiment)
-
 
 
 
