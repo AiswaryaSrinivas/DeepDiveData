@@ -1,0 +1,5 @@
+(#chhapaak OR #chappak OR #chapaak) lang:en since:2019-12-10
+
+
+
+scrapy crawl TweetScraper -a query="(#chhapaak OR #chappak OR #chapaak OR #boycottchhappak) lang:en until:2020-02-10 since:2019-12-10 -filter:replies" -a crawl_user=True
